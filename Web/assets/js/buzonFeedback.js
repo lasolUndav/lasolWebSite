@@ -1,7 +1,6 @@
 function setup(){
     var configuration = getConfigFirebase();
     firebase.initializeApp(configuration);
-    console.log ("Firebase inicializado");
 }
 
 function getConfigFirebase(){
@@ -17,5 +16,19 @@ function getConfigFirebase(){
     return config;
 }
 
+function sendFeedback(){
+    var rootPassword = "feedbackSeminarios";
+    var feedbackPassword = firebase.database().ref().child(rootPassword).push().key;
+    var feedback = getFeedback();
+    var updates = {};
+    updates[`/${rootPassword}/${feedbackPassword}`] = feedback;
+    return firebase.database().ref().update(updates);
+}
 
-
+function getFeedback(){
+    var object = {
+        commentary: "comentario",
+        score: "10"
+    };
+    return object;
+ }
